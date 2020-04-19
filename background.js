@@ -52,7 +52,8 @@ var sortProcrastination = () => {
 
     //generate procrastination index
     for (var i = 0; i < 5; i++) {
-      procrastination = procrastination + siteValue(data[i].name);
+      procrastination =
+        procrastination + siteValue(data[i].name) * (1.4 - 0.1 * i);
     }
 
     //handling procrastination exceeding
@@ -73,7 +74,7 @@ var siteValue = (site) => {
   if (site.search(/netflix|twitch/) != -1) return -26;
   if (
     site.search(
-      /facebook|instagram|tiktok|twitter|fandom|9gag|buzzfeed|forbes|kongregate/
+      /facebook|imdb|instagram|tiktok|twitter|fandom|9gag|buzzfeed|forbes|kongregate/
     ) != -1
   )
     return -17;
@@ -97,9 +98,9 @@ var siteValue = (site) => {
 var setIcon = (procrastination) => {
   var mood = "chill";
 
-  if (procrastination > 80) {
+  if (procrastination > 70) {
     mood = "happy";
-  } else if (procrastination > 40) {
+  } else if (procrastination > 49) {
     mood = "chill";
   } else {
     mood = "cry";
