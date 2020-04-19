@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Procrastination</title>
+  </head>
+  <style>
+    @font-face {
+  font-family: "Lulo";
+  src: url("./assets/Lulo.ttf");
+}
+
+h1 {
+  font-size: 16px;
+  text-align: center;
+  font-family: "Lulo";
+  color: gray;
+}
+
+h2 {
+  font-size: 50px;
+  margin-top: -15px;
+  text-align: center;
+  font-family: "Lulo";
+  color: gray;
+}
+
+p {
+  color: lightgray;
+  font-size:14px;
+}
+
+a{
+  color: gray;
+  font-weight: 600;
+}
+
+table{
+  padding:16px;
+}
+
+th {
+  color: #c0c0c0;  
+  font-size:14px;
+}
+
+.icon{
+  width:12px;
+  height:12px;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+
+}
+
+.center-row{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+}
+
+table{
+      width: 100%;
+}
+    </style>
+
+  <body>
+    <div class="center" style="width: 350px;">
+
+      <!--Rabbit Gif-->
+      <div class="center" id="gif"></div>
+
+      <!--Rabbit Mood-->
+      <h1 id="message"></h1>
+      
+      <table>
+        <tr>
+          <th>Top 5 Sites</th>
+          <th>Productivity</th>
+        </tr>
+        <tr>
+          <!--Top Sites-->
+          <td id="topsites"></td>
+
+          <!--Score-->
+          <td id="score" class="center-row"></td>
+        </tr>
+      </table>
+      
+      <!--Reset-->
+      <p style="text-align: center; font-size: 10px;" class="center-row">Click here to <a id="reset">RESET</a> productivity data</p>
+
+    </div>
+  </div>
+    <script src="popup.js"></script>
+
+  </body>
+</html>
