@@ -1,10 +1,17 @@
+const placeholder =
+  "https://reactnativecode.com/wp-content/uploads/2018/02/Default_Image_Thumbnail.png";
+
 document.addEventListener("DOMContentLoaded", function () {
   chrome.storage.local.get(["sites"], function (result) {
     const data = result.sites;
     const topSites = document.getElementById("topsites");
 
     for (var i = 0; i < 5; i++) {
-      topSites.innerHTML += `<p><img class="icon" src="${data[i].icon}">   ${data[i].name}</p>`;
+      if (data[i].icon == undefined) {
+        topSites.innerHTML += `<p><img class="icon" style="padding-right: 8px;" src="${placeholder}">${data[i].name}</p>`;
+      } else {
+        topSites.innerHTML += `<p><img class="icon" style="padding-right: 8px;" src="${data[i].icon}">${data[i].name}</p>`;
+      }
     }
   });
 

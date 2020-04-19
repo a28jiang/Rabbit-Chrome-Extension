@@ -89,7 +89,7 @@ var siteValue = (site) => {
       /facebook|reddit|imdb|instagram|tiktok|twitter|fandom|9gag|buzzfeed|forbes|kongregate|y8/
     ) != -1
   )
-    return -17;
+    return -21;
   if (
     site.search(
       /amazon|youtube|ebay|pinterest|aliexpress|taobao|wish.|yesstyle/
@@ -102,7 +102,7 @@ var siteValue = (site) => {
   if (site.search(/outlook|edu|gmail|wikipedia/) != -1) return 4;
   if (
     site.search(
-      /docs.|drive.|news|keep.|masterclass|coursehero|medium|course/
+      /docs.|drive.|news|keep.|masterclass|coursehero|medium|course|quizlet|kahoot/
     ) != -1
   )
     return 13;
