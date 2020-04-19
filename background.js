@@ -42,7 +42,7 @@ var sortProcrastination = () => {
   chrome.storage.local.get(["sites"], function (result) {
     var procrastination = 50;
     const data = result.sites;
-    var isLowData = data.length < 5;
+    var isLowData = data.length < 6;
 
     //handle low data case
     // if (data.length < 5) {
@@ -94,7 +94,7 @@ var siteValue = (site) => {
   if (site.search(/drive|docs.|drive./) != -1) return 13;
   if (
     site.search(
-      /stackoverflow|medium|behance|w3schools|github|waterloo|learn|office/
+      /stackoverflow|medium|behance|w3schools|github|developer|waterloo|learn|office/
     ) != -1
   )
     return 24;
