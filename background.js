@@ -42,16 +42,18 @@ var sortProcrastination = () => {
   chrome.storage.local.get(["sites"], function (result) {
     var procrastination = 50;
     const data = result.sites;
+    var isLowData = data.length < 5;
 
     //handle low data case
-    if (data.length < 5) {
-      chrome.storage.local.set({ state: procrastination });
-      setIcon(procrastination);
-      return;
-    }
+    // if (data.length < 5) {
+    //   chrome.storage.local.set({ state: procrastination });
+    //   setIcon(procrastination);
+    //   return;
+    // }
 
     //generate procrastination index
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < (isLowData ? data.length : 6); i++) {
+      console.log(data[i].name, siteValue(data[i].name));
       procrastination =
         procrastination + siteValue(data[i].name) * (1.4 - 0.1 * i);
     }
@@ -71,7 +73,12 @@ var sortProcrastination = () => {
 
 var siteValue = (site) => {
   //procrastination sites
-  if (site.search(/netflix|twitch/) != -1) return -26;
+  if (
+    site.search(
+      /netflix|twitch|kissanime|dramacool|youku|viki|hulu|dramafever|asiancrush|hbo|disneyplus|primevideo|viewster|crunchryoll/
+    ) != -1
+  )
+    return -26;
   if (
     site.search(
       /facebook|imdb|instagram|tiktok|twitter|fandom|9gag|buzzfeed|forbes|kongregate/
@@ -84,7 +91,7 @@ var siteValue = (site) => {
 
   //productive sites
   if (site.search(/outlook|edu|gmail/) != -1) return 4;
-  if (site.search(/drive|docs.|drive.|/) != -1) return 13;
+  if (site.search(/drive|docs.|drive./) != -1) return 13;
   if (
     site.search(
       /stackoverflow|medium|behance|w3schools|github|waterloo|learn|office/
