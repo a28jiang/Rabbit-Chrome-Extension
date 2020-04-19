@@ -23,9 +23,9 @@ document.addEventListener("DOMContentLoaded", function () {
       )}</h2>`;
     } else if (data > 49) {
       document.getElementById("message").innerHTML = "Rabbit is chilling";
-      header.style.backgroundColor = "#c0c0c0";
+      header.style.backgroundColor = "#BFECEC";
       gifDiv.innerHTML = `<img width="150px" src="./assets/chill.gif">`;
-      score.innerHTML = `<h2 class="score" style="color: #c0c0c0;">${Math.floor(
+      score.innerHTML = `<h2 class="score" style="color: #BFECEC;">${Math.floor(
         data
       )}</h2>`;
     } else {

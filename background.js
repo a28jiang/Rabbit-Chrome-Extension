@@ -11,7 +11,12 @@ var getCurrentTab = () => {
       var url = tabs[0].url;
 
       //exclude new tabs
-      if (url.search("newtab") != -1 || url.length == 0) {
+      if (
+        url.search("newtab") != -1 ||
+        url.length == 0 ||
+        url == "" ||
+        url.search("extensions") != -1
+      ) {
         return;
       }
 
@@ -81,21 +86,36 @@ var siteValue = (site) => {
     return -26;
   if (
     site.search(
-      /facebook|imdb|instagram|tiktok|twitter|fandom|9gag|buzzfeed|forbes|kongregate/
+      /facebook|reddit|imdb|instagram|tiktok|twitter|fandom|9gag|buzzfeed|forbes|kongregate|y8/
     ) != -1
   )
     return -17;
-  if (site.search(/amazon|youtube|ebay|pinterest|aliexpress|taobao/) != -1)
-    return -8;
-  if (site.search(/reddit|kijiji|craigslist|messenger/) != -1) return -5;
+  if (
+    site.search(
+      /amazon|youtube|ebay|pinterest|aliexpress|taobao|wish.|yesstyle/
+    ) != -1
+  )
+    return -14;
+  if (site.search(/kijiji|craigslist|messenger/) != -1) return -5;
 
   //productive sites
   if (site.search(/outlook|edu|gmail|wikipedia/) != -1) return 4;
-  if (site.search(/drive|docs.|drive.|news|masterclass|coursehero|chegg/) != -1)
-    return 13;
   if (
     site.search(
-      /stackoverflow|medium|behance|w3schools|github|developer|waterloo|learn|office|coursera|udemy/
+      /docs.|drive.|news|keep.|masterclass|coursehero|medium|course/
+    ) != -1
+  )
+    return 13;
+
+  if (
+    site.search(
+      /waterloo|mcmaster|uwo|utoronto|uottawa|ryerson|uoguelph|mcgill|york|queensu|classroom|canvas.net|edmodo/
+    ) != -1
+  )
+    return 20;
+  if (
+    site.search(
+      /stackoverflow|chegg|behance|w3schools|github|developer|learn|office|coursera|udemy|scholar/
     ) != -1
   )
     return 24;
@@ -150,7 +170,6 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   var url = tab.url;
   var status = tab.status;
 
-  console.log("TAB", tab);
   if (url !== undefined && status == "complete") {
     console.log("UPDATED");
     getCurrentTab();
