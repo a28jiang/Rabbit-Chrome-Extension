@@ -90,11 +90,12 @@ var siteValue = (site) => {
   if (site.search(/reddit|kijiji|craigslist|messenger/) != -1) return -5;
 
   //productive sites
-  if (site.search(/outlook|edu|gmail/) != -1) return 4;
-  if (site.search(/drive|docs.|drive./) != -1) return 13;
+  if (site.search(/outlook|edu|gmail|wikipedia/) != -1) return 4;
+  if (site.search(/drive|docs.|drive.|news|masterclass|coursehero|chegg/) != -1)
+    return 13;
   if (
     site.search(
-      /stackoverflow|medium|behance|w3schools|github|developer|waterloo|learn|office/
+      /stackoverflow|medium|behance|w3schools|github|developer|waterloo|learn|office|coursera|udemy/
     ) != -1
   )
     return 24;
