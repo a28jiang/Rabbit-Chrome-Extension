@@ -71,14 +71,19 @@ var sortProcrastination = () => {
 var siteValue = (site) => {
   //procrastination sites
   if (site.search(/netflix|twitch/) != -1) return -26;
-  if (site.search(/facebook|instagram|tiktok|twitter|fandom/) != -1) return -17;
+  if (
+    site.search(
+      /facebook|instagram|tiktok|twitter|fandom|9gag|buzzfeed|forbes|kongregate/
+    ) != -1
+  )
+    return -17;
   if (site.search(/amazon|youtube|ebay|pinterest|aliexpress|taobao/) != -1)
     return -8;
   if (site.search(/reddit|kijiji|craigslist|messenger/) != -1) return -5;
 
   //productive sites
   if (site.search(/outlook|edu|gmail/) != -1) return 4;
-  if (site.search(/drive|docs.google|drive.google|/) != -1) return 13;
+  if (site.search(/drive|docs.|drive.|/) != -1) return 13;
   if (
     site.search(
       /stackoverflow|medium|behance|w3schools|github|waterloo|learn|office/
