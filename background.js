@@ -86,23 +86,23 @@ var siteValue = (site) => {
     return -26;
   if (
     site.search(
-      /facebook|reddit|imdb|instagram|tiktok|twitter|fandom|9gag|buzzfeed|forbes|kongregate|y8/
+      /facebook|imdb|instagram|tiktok|twitter|fandom|9gag|buzzfeed|forbes|kongregate|y8/
     ) != -1
   )
     return -21;
   if (
     site.search(
-      /amazon|youtube|ebay|pinterest|aliexpress|taobao|wish.|yesstyle/
+      /amazon|reddit|youtube|ebay|pinterest|aliexpress|taobao|wish.|yesstyle/
     ) != -1
   )
     return -14;
   if (site.search(/kijiji|craigslist|messenger/) != -1) return -5;
 
   //productive sites
-  if (site.search(/outlook|edu|gmail|wikipedia/) != -1) return 4;
+  if (site.search(/outlook|edu|gmail|google|wikipedia/) != -1) return 4;
   if (
     site.search(
-      /docs.|drive.|news|keep.|masterclass|coursehero|medium|course|quizlet|kahoot/
+      /docs.|drive.|quora|yahoo|news|keep.|masterclass|coursehero|medium|course|quizlet|kahoot/
     ) != -1
   )
     return 13;
@@ -152,6 +152,18 @@ var setIcon = (procrastination) => {
   iconLoop();
 };
 
+//refreshes cache every hour
+
+var freshData = () => {
+  sites = sites.slice(4);
+  sites.forEach((site, index) => {
+    site.count = 4 - index;
+  });
+  console.log(sites);
+
+  chrome.storage.local.set({ sites: sites });
+};
+
 //reset sites
 chrome.runtime.onMessage.addListener(function (request) {
   if (request.type == "resetSites") {
@@ -162,6 +174,7 @@ chrome.runtime.onMessage.addListener(function (request) {
   }
 });
 
+setInterval(freshData, 1000 * 60 * 60);
 setInterval(sortProcrastination, 3000);
 getCurrentTab();
 chrome.tabs.onActivated.addListener(getCurrentTab);
