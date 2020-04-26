@@ -7,119 +7,144 @@
   </head>
   <style>
     @font-face {
-  font-family: "Lulo";
-  src: url("./assets/Lulo.ttf");
-}
+      font-family: "Lulo";
+      src: url("./assets/Lulo.ttf");
+    }
 
-body{
-  margin:0px;
-}
+    body {
+      margin: 0px;
+    }
 
-h1 {
-  font-size: 16px;
-  text-align: center;
-  font-family: "Lulo";
-  color: gray;
-}
+    h1 {
+      font-size: 16px;
+      text-align: center;
+      font-family: "Lulo";
+      color: gray;
+    }
 
-h2 {
-  font-size: 35px;
-  margin-top: 0px;
-  text-align: center;
-  font-family: "Lulo";
-  color: gray;
-}
+    h2 {
+      font-size: 35px;
+      margin-top: 0px;
+      text-align: center;
+      font-family: "Lulo";
+      color: gray;
+    }
 
-h3 {
-  font-size: 10px;
-  margin: 0px;
-  padding-top: 12px;
-  text-align: center;
-  font-family: "Lulo";
-  color: white;
-  opacity: 0.5;
-}
+    h3 {
+      font-size: 10px;
+      margin: 0px;
+      padding-top: 12px;
+      text-align: center;
+      font-family: "Lulo";
+      color: white;
+    }
 
-p {
-  color: lightgray;
-  font-size:14px;
-}
+    p {
+      color: lightgray;
+      font-size: 14px;
+    }
 
-a{
-  color: gray;
-  font-weight: 600;
-}
+    a {
+      color: gray;
+      font-weight: 600;
+    }
 
-table{
-  padding:16px;
-}
+    table {
+      padding: 16px;
+    }
 
-th {
-  color: #c0c0c0;  
-  font-size:14px;
-}
+    th {
+      color: #c0c0c0;
+      font-size: 14px;
+    }
 
-.icon{
-  width:12px;
-  height:12px;
-}
+    .icon {
+      width: 12px;
+      height: 12px;
+    }
 
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
+    .center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
 
-}
+    .center-row {
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      padding-top: 20px;
+    }
 
-.center-row{
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 20px;
-}
-
-table{
+    table {
       width: 100%;
-}
+    }
 
-    </style>
+    .headerLeft {
+      position: absolute;
+      height: 22px;
+      margin-left: 50px;
+      margin-top: 8px;
+    }
+    .headerRight {
+      position: absolute;
+      height: 22px;
+      margin-left: 16px;
+      margin-top: 8px;
+    }
+
+    #settings:hover {
+      opacity: 0.5;
+    }
+
+    #pause:hover {
+      opacity: 0.5;
+    }
+
+    .overlay {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background-color: white;
+      opacity: 0.5;
+    }
+  </style>
 
   <body>
     <div class="center" style="width: 350px;">
-    <div id="header" style="width:100%; height:40px; margin-bottom:12px;">
-      <h3>Rabbit.exe</h3>
-    </div>
+      <div id="header" style="width: 100%; height: 40px; margin-bottom: 12px;">
+        <img id="settings" class="headerRight" src="./assets/settings.png/" />
+        <div id="pause">
+          <img class="headerLeft" src="./assets/pause.png/" />
+        </div>
+        <h3 style="padding-left: 200px;">
+          Rabbit.exe
+        </h3>
+      </div>
 
+      <div id="overlay"></div>
       <!--Rabbit Gif-->
       <div class="center" id="gif"></div>
 
       <!--Rabbit Mood-->
       <h1 id="message"></h1>
-      
+
       <table>
-        <tr style="margin-left:-10px;">
+        <tr style="margin-left: -10px;">
           <th>Most Visited Sites</th>
           <th>Productivity</th>
         </tr>
         <tr>
           <!--Top Sites-->
-          <td style="padding-left:10px;" id="topsites"></td>
+          <td style="padding-left: 10px;" id="topsites"></td>
 
           <!--Score-->
           <td id="score" class="center-row"></td>
         </tr>
       </table>
-      
-      <!--Reset-->
-   
-      <p style="margin-top:15px; text-align: center; font-size: 10px; display: block;
-      margin-left: auto;
-      margin-right: auto;">To have a fresh start, click here to <a id="reset">RESET</a> productivity data</p>
-
     </div>
-  </div>
-    <script src="popup.js"></script>
 
+    <script src="popup.js"></script>
   </body>
 </html>

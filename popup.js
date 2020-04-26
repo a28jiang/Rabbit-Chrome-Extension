@@ -7,10 +7,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const topSites = document.getElementById("topsites");
 
     for (var i = 0; i < 5; i++) {
-      if (data[i].icon == undefined) {
-        topSites.innerHTML += `<p><img class="icon" style="padding-right: 8px;" src="${placeholder}">${data[i].name}</p>`;
-      } else {
+      if (data[i].icon) {
         topSites.innerHTML += `<p><img class="icon" style="padding-right: 8px;" src="${data[i].icon}">${data[i].name}</p>`;
+      } else {
+        topSites.innerHTML += `<p><img class="icon" style="padding-right: 8px;" src="${placeholder}">${data[i].name}</p>`;
       }
     }
   });
@@ -44,10 +44,33 @@ document.addEventListener("DOMContentLoaded", function () {
       )}</h2>`;
     }
   });
+
+  chrome.storage.local.get(["pauseState"], function (result) {
+    var isPaused = result.pauseState;
+
+    console.log("ISPAUSED", isPaused);
+    const button = document.getElementById("pause");
+    const overlay = document.getElementById("overlay");
+
+    //switch image
+    if (isPaused) {
+      button.innerHTML = `<img class="headerLeft"  src="./assets/play.png/"></img>`;
+      overlay.classList.add("overlay");
+    } else {
+      button.innerHTML = `<img class="headerLeft"  src="./assets/pause.png/"></img>`;
+      overlay.classList.remove("overlay");
+    }
+  });
 });
 
 //handle reset
-document.getElementById("reset").addEventListener("click", function () {
+document.getElementById("pause").addEventListener("click", function () {
   location.reload();
-  chrome.runtime.sendMessage({ type: "resetSites" });
+  chrome.runtime.sendMessage({ type: "pauseSites" });
+});
+
+//handle setting
+//handle reset
+document.getElementById("settings").addEventListener("click", function () {
+  chrome.runtime.openOptionsPage();
 });
