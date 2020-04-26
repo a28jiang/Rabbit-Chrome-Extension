@@ -35,6 +35,13 @@ document.addEventListener("DOMContentLoaded", function () {
       score.innerHTML = `<h2 class="score" style="color: #BFECEC;">${Math.floor(
         data
       )}</h2>`;
+    } else if (data > 30) {
+      document.getElementById("message").innerHTML = "Slacking Rabbit";
+      header.style.backgroundColor = "#F8C593";
+      gifDiv.innerHTML = `<img width="150px" src="./assets/meh.gif">`;
+      score.innerHTML = `<h2 class="score" style="color: #F8C593;">${Math.floor(
+        data
+      )}</h2>`;
     } else {
       document.getElementById("message").innerHTML = "Rabbit gives up";
       header.style.backgroundColor = "#f59d92";

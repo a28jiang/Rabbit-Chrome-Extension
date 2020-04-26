@@ -1,68 +1,46 @@
 var sites = [];
 var paused = false;
 
-var getCurrentTab = () => {
+var getCurrentTab = (hostname, favicon) => {
   if (!paused) {
-    chrome.tabs.query(
-      {
-        currentWindow: true,
-        active: true,
-      },
-      function (tabs) {
-        var unique = true;
-        var url = tabs[0].url;
+    var unique = true;
 
-        //exclude new tabs
-        if (
-          url.search("newtab") != -1 ||
-          url.length == 0 ||
-          url == "" ||
-          url.search("extensions") != -1
-        ) {
-          console.log("EXITED");
+    var isWhitelist = false;
+    //check for existing index and whitelist status
+    sites.forEach((site, index) => {
+      if (hostname == site.name) {
+        if (site.whitelist) {
+          console.log("SITE WHITELISTED");
+          isWhitelist = true;
+          return;
+        } else {
+          unique = false;
+          sites[index].count++;
           return;
         }
-
-        hostname = new URL(url).hostname;
-
-        var isWhitelist = false;
-        //check for existing index and whitelist status
-        sites.forEach((site, index) => {
-          if (hostname == site.name) {
-            if (site.whitelist) {
-              console.log("SITE WHITELISTED");
-              isWhitelist = true;
-              return;
-            } else {
-              unique = false;
-              sites[index].count++;
-              return;
-            }
-          }
-        });
-
-        //exit function if whitelisted
-        if (isWhitelist) {
-          return;
-        }
-
-        if (unique) {
-          sites.push({
-            name: hostname,
-            count: 1,
-            icon: tabs[0].favIconUrl,
-            whitelist: false,
-          });
-        }
-
-        //sort from largest to smallest
-        sites.sort((a, b) => b.count - a.count);
-
-        //push to storage
-        chrome.storage.local.set({ sites: sites });
-        console.log(sites);
       }
-    );
+    });
+
+    //exit function if whitelisted
+    if (isWhitelist) {
+      return;
+    }
+
+    if (unique) {
+      sites.push({
+        name: hostname,
+        count: 1,
+        icon: favicon,
+        whitelist: false,
+      });
+    }
+
+    //sort from largest to smallest
+    sites.sort((a, b) => b.count - a.count);
+
+    //push to storage
+    chrome.storage.local.set({ sites: sites });
+    console.log(sites);
   }
 };
 
@@ -153,11 +131,16 @@ var setIcon = (procrastination) => {
 
   if (procrastination > 70) {
     mood = "happy";
-  } else if (procrastination > 40) {
+  } else if (procrastination > 49) {
     mood = "chill";
+  } else if (procrastination > 30) {
+    mood = "meh";
   } else {
     mood = "cry";
   }
+
+  //optional badge
+  //chrome.browserAction.setBadgeText({ text: `${Math.floor(procrastination)}` });
 
   var i = 0;
   //assemble gif for mood
@@ -217,13 +200,37 @@ chrome.runtime.onMessage.addListener(function (request) {
 initBackground();
 setInterval(freshData, 1000 * 60 * 60);
 setInterval(sortProcrastination, 3000);
-chrome.tabs.onActivated.addListener(getCurrentTab);
+chrome.tabs.onActivated.addListener(function () {
+  chrome.tabs.query(
+    {
+      currentWindow: true,
+      active: true,
+    },
+    function (tabs) {
+      var url = tabs[0].url;
+      var favicon = tabs[0].favIconUrl;
+
+      hostname = new URL(url).hostname;
+      console.log("onActivated", hostname);
+      getCurrentTab(hostname, favicon);
+    }
+  );
+});
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   var url = tab.url;
   var status = tab.status;
 
-  if (url !== undefined && status == "complete") {
-    getCurrentTab();
+  if (url.search(/newtab|chrome:/) != -1 || status == "loading") {
+    console.log("EXITED");
+    return;
+  }
+
+  if (status == "complete") {
+    hostname = new URL(url).hostname;
+    var favicon = tab.favIconUrl;
+
+    console.log("onUpdated", hostname);
+    getCurrentTab(hostname, favicon);
   }
 });
