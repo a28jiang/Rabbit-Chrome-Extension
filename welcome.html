@@ -1,0 +1,163 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    
+    <style>
+        @font-face {
+          font-family: "Lulo";
+          src: url("./assets/Lulo.ttf");
+        }
+    
+        body {
+          margin: 0px;
+        }
+    
+        h1 {
+          font-size: 28px;
+          padding-bottom: 20px;
+          padding-top: 10px;
+          text-align: center;
+          font-family: "Lulo";
+          color: #9B9B9B;
+        }
+
+        h2 {
+          font-size: 32px;
+          padding: 22px;
+          text-align: center;
+          color: lightgray;
+        }
+    
+        .center {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          width: 50%;
+        }
+    
+        .start {
+
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 35px;
+            margin-bottom: 50px;
+        }
+
+        p {
+            color: lightgray;
+            font-size: 20px;
+        }
+
+        .hero{
+            width:40%;
+            padding-top:15px;
+            justify-content: center;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        a {
+            text-decoration: none;
+            text-align: center;
+            font-size: 20px;
+            font-family: "Lulo";
+            color: #B8EBB8;
+            font-weight: 600;
+            }
+
+        a:hover {
+            opacity: 0.5;
+            }   
+
+       .tutorial{
+           width:250px;
+           margin-bottom: 20px;
+       }
+
+       .fade-in {
+animation: fadeIn ease 2s;
+-webkit-animation: fadeIn ease 2s;
+-moz-animation: fadeIn ease 2s;
+-o-animation: fadeIn ease 2s;
+-ms-animation: fadeIn ease 2s;
+}
+@keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-o-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+      </style>
+    
+      <body>
+        <div class="center fade-in" style="width: 600px;">
+            <div class="center" style="width: 500px;">
+          <!--Rabbit Gif-->
+          <div class="hero">
+            <img width="200px" src="./assets/happy.gif">
+          </div>
+    
+          <!--Rabbit Mood-->
+          <h1>Hi, I'm Rabbit</h1>
+        </div>
+
+          <table>
+            <tr>
+              <td>
+                <p>Rabbit's icon updates in real time so you can check your productivity!
+                </p>
+              </td>
+              <td>
+              <img class="tutorial" src="./assets/w_animated.png">
+              </td>
+            </tr>
+            <tr>
+                <td>
+                  <p>You can always pause Rabbit when you're feeling lazy.
+                  </p>
+                </td>
+                <td>
+                <img class="tutorial" style="margin-bottom: 30px;"src="./assets/w_popup.png">
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <p>Easily whitelist sites or reset Rabbit's memory through the options.
+                  </p>
+                </td>
+                <td>
+                <img class="tutorial" src="./assets/w_option.png">
+                </td>
+              </tr>
+          </table>
+          
+          <a class="start" id="finished">Let's get started!</a>
+          <script src="welcome.js"></script>
+        </div>
+  </body>
+</html>

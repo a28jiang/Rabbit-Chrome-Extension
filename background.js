@@ -81,13 +81,13 @@ var siteValue = (site) => {
   //procrastination sites
   if (
     site.search(
-      /netflix|twitch|kissanime|dramacool|youku|viki|hulu|dramafever|asiancrush|hbo|disneyplus|primevideo|viewster|crunchryoll/
+      /netflix|twitch|kissanime|anime|dramacool|youku|soap2day|viki|hulu|dramafever|asiancrush|hbo|disneyplus|primevideo|viewster|crunchryoll/
     ) != -1
   )
     return -26;
   if (
     site.search(
-      /facebook|imdb|instagram|tiktok|twitter|fandom|9gag|buzzfeed|forbes|kongregate|y8/
+      /facebook|imdb|instagram|tiktok|twitter|fandom|9gag|buzzfeed|forbes|kongregate|y8|depop/
     ) != -1
   )
     return -21;
@@ -97,7 +97,7 @@ var siteValue = (site) => {
     ) != -1
   )
     return -14;
-  if (site.search(/kijiji|craigslist|messenger/) != -1) return -5;
+  if (site.search(/kijiji|craigslist|messenger|discord/) != -1) return -5;
 
   //productive sites
   if (site.search(/ctv|global|cbc|abc|torontosun|cp24|nationalpost|bbc/) != -1)
@@ -112,16 +112,16 @@ var siteValue = (site) => {
 
   if (
     site.search(
-      /waterloo|mcmaster|uwo|utoronto|uottawa|ryerson|uoguelph|mcgill|york|queensu|classroom|canvas.net|edmodo/
+      /waterloo|mcmaster|uwo|utoronto|uottawa|ryerson|uoguelph|mcgill|york|queensu|classroom|canvas.net|canva|webex|bongo|teams|zoom|edmodo/
     ) != -1
   )
-    return 20;
+    return 17;
   if (
     site.search(
-      /stackoverflow|chegg|behance|w3schools|github|developer|learn|office|coursera|udemy|scholar/
+      /stackoverflow|chegg|mobius|piazza|behance|w3schools|github|developer|learn|office|coursera|udemy|scholar/
     ) != -1
   )
-    return 24;
+    return 21;
 
   return 0;
 };
@@ -233,4 +233,14 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
     console.log("onUpdated", hostname);
     getCurrentTab(hostname, favicon);
   }
+});
+
+//new user
+chrome.runtime.onInstalled.addListener(function (object) {
+  chrome.tabs.create(
+    { url: chrome.extension.getURL("welcome.html") },
+    function (tab) {
+      console.log("New tab launched");
+    }
+  );
 });
