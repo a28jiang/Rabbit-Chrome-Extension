@@ -61,10 +61,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //switch image
     if (isPaused) {
-      button.innerHTML = `<img class="headerLeft"  src="./assets/play.png/"></img>`;
+      button.innerHTML = `<img class="headerLeft"  src="./assets/play.png"></img>`;
       overlay.classList.add("overlay");
     } else {
-      button.innerHTML = `<img class="headerLeft"  src="./assets/pause.png/"></img>`;
+      button.innerHTML = `<img class="headerLeft"  src="./assets/pause.png"></img>`;
       overlay.classList.remove("overlay");
     }
   });
