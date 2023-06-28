@@ -56,6 +56,7 @@ gifImage.style.top = offsetY != 0 ? `${offsetY}px` : "90%";
 gifImage.style.transform = "translate(-50%, -50%)";
 gifImage.style.maxWidth = "100%";
 gifImage.style.maxHeight = "100%";
+gifImage.style.cursor = "grab";
 gifImage.style.pointerEvents = "auto"; // Enable pointer
 
 function updateImagePositions({
@@ -120,6 +121,19 @@ chrome.storage.local.get(
   }
 );
 
+function main() {
+  // Append the <img> element to the <div> overlay
+  divOverlay.appendChild(closeButton);
+  divOverlay.appendChild(resizeButton);
+  divOverlay.appendChild(gifImage);
+  gifOverlay.appendChild(divOverlay);
+
+  // Append the GIF overlay to the document body
+  document.body.appendChild(gifOverlay);
+}
+
+main();
+
 // Listener for local storage changes
 chrome.storage.onChanged.addListener(function (changes, namespace) {
   if (namespace === "local") {
@@ -147,19 +161,6 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
     }
   }
 });
-
-function main() {
-  // Append the <img> element to the <div> overlay
-  divOverlay.appendChild(closeButton);
-  divOverlay.appendChild(resizeButton);
-  divOverlay.appendChild(gifImage);
-  gifOverlay.appendChild(divOverlay);
-
-  // Append the GIF overlay to the document body
-  document.body.appendChild(gifOverlay);
-}
-
-main();
 
 // Add event listeners for drag events
 gifImage.addEventListener("dragstart", handleDragStart);

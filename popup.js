@@ -85,6 +85,6 @@ document.getElementById("settings").addEventListener("click", function () {
   chrome.runtime.openOptionsPage();
 });
 
-document.getElementById("expand").addEventListener("click", function () {
+document.getElementById("pause").addEventListener("click", function () {
   chrome.storage.local.set({ gifClose: false });
 });

@@ -4,7 +4,7 @@
   "description": "An interactive companion to keep you focused and productive.",
   "version": "1.3",
   "icons": {
-    "128": "icon.png"
+    "128": "assets/icon.png"
   },
   "action": {
     "default_icon": "icon.png",
@@ -14,7 +14,7 @@
   "permissions": ["storage", "tabs", "activeTab", "scripting"],
 
   "background": {
-    "service_worker": "background.js",
+    "service_worker": "background/script.js",
     "type": "module"
   },
   "options_ui": {

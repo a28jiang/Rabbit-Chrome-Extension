@@ -1,0 +1,63 @@
+import { checkValidURL, updateSites } from "./tabs.js";
+
+export const tabActivationListener = (sites) => {
+  chrome.tabs.onActivated.addListener(function () {
+    chrome.tabs.query(
+      {
+        currentWindow: true,
+        active: true,
+      },
+      function (tabs) {
+        const { url, favIconUrl } = tabs[0];
+        if (checkValidURL(tabs[0])) {
+          const hostname = new URL(url).hostname;
+          updateSites(hostname, favIconUrl, sites);
+        }
+      }
+    );
+  });
+};
+
+export const tabUpdatedListener = (sites) => {
+  chrome.tabs.onUpdated.addListener(function (_, __, tab) {
+    const { url, status } = tab;
+
+    if (checkValidURL(tab)) {
+      if (status == "complete") {
+        const hostname = new URL(url).hostname;
+        updateSites(hostname, tab["favIconUrl"], sites);
+      }
+    }
+  });
+};
+
+export const messageListener = (sites, paused) => {
+  //reset, pause and update sites
+  chrome.runtime.onMessage.addListener(function (request) {
+    if (request.type == "resetSites") {
+      sites = [];
+      chrome.storage.local.set({ sites: sites });
+      chrome.storage.local.set({ state: 50 });
+    }
+    if (request.type == "pauseSites") {
+      paused = !paused;
+      chrome.storage.local.set({ pauseState: paused });
+    }
+    if (request.type == "updateSites") {
+      chrome.storage.local.get(["sites"], function (result) {
+        sites = result.sites;
+      });
+    }
+  });
+};
+
+export const onInstalledListener = () => {
+  chrome.runtime.onInstalled.addListener(function () {
+    chrome.tabs.create(
+      { url: chrome.runtime.getURL("tutorial/welcome.html") },
+      function () {
+        console.log("New tab launched");
+      }
+    );
+  });
+};

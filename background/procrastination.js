@@ -1,4 +1,5 @@
 import { configMap, ignoreComponents } from "./baseConfig.js";
+import { setPopupIcon } from "./icon.js";
 import { sum } from "../util.js";
 
 // Uses configMap to calculate a site's given score
@@ -26,7 +27,7 @@ export const siteValue = (site) => {
 };
 
 // Function to provide procrastination score and set Icon
-export const calculateProductivity = (setIcon) => {
+export const calculateProductivity = () => {
   chrome.storage.local.get(["sites"], function (result) {
     const data = result.sites;
     const dataLength = data.length < 6 ? data.length : 6;
@@ -41,8 +42,7 @@ export const calculateProductivity = (setIcon) => {
       Math.min(100, Math.floor(50 + sum(siteValues)))
     );
 
-    // if setIcon is provided, trigger icon change
-    if (setIcon) setIcon(procrastination);
+    setPopupIcon(procrastination);
 
     //set procrastination
     chrome.storage.local.set({ state: procrastination });

@@ -9,10 +9,10 @@ export const checkValidURL = (tab) => {
   return true;
 };
 
-export const getCurrentTab = (hostname = "", favicon, sites) => {
+// Updates sites object with fresh tab data
+export const updateSites = (hostname = "", favicon, sites) => {
   if (hostname == "") return;
   var unique = true;
-  console.log("SITE", sites);
   var isWhitelist = false;
   //check for existing index and whitelist status
   sites.forEach((site, index) => {
@@ -46,5 +46,14 @@ export const getCurrentTab = (hostname = "", favicon, sites) => {
   sites.sort((a, b) => b.count - a.count);
 
   //push to storage
+  chrome.storage.local.set({ sites: sites });
+};
+
+export const refreshSiteData = (sites) => {
+  sites = sites.slice(5);
+  sites.forEach((site, index) => {
+    site.count = 5 - index;
+  });
+
   chrome.storage.local.set({ sites: sites });
 };
