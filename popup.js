@@ -62,10 +62,10 @@ document.addEventListener("DOMContentLoaded", function () {
     //switch image
     if (isPaused) {
       button.innerHTML = `<img class="headerLeft"  src="./assets/play.png"></img>`;
-      overlay.classList.add("overlay");
+      // overlay.classList.add("overlay");
     } else {
       button.innerHTML = `<img class="headerLeft"  src="./assets/pause.png"></img>`;
-      overlay.classList.remove("overlay");
+      // overlay.classList.remove("overlay");
     }
   });
 });
@@ -74,10 +74,17 @@ document.addEventListener("DOMContentLoaded", function () {
 document.getElementById("pause").addEventListener("click", function () {
   location.reload();
   chrome.runtime.sendMessage({ type: "pauseSites" });
+  chrome.storage.local.get(["gifClose"], (res) => {
+    chrome.storage.local.set({ gifClose: !res["gifClose"] });
+  });
 });
 
 //handle setting
 //handle reset
 document.getElementById("settings").addEventListener("click", function () {
   chrome.runtime.openOptionsPage();
+});
+
+document.getElementById("expand").addEventListener("click", function () {
+  chrome.storage.local.set({ gifClose: false });
 });

@@ -2,46 +2,45 @@ var sites = [];
 var paused = false;
 
 var getCurrentTab = (hostname, favicon) => {
-  if (!paused) {
-    var unique = true;
+  // if (!paused) {
+  var unique = true;
 
-    var isWhitelist = false;
-    //check for existing index and whitelist status
-    sites.forEach((site, index) => {
-      if (hostname == site.name) {
-        if (site.whitelist) {
-          console.log("SITE WHITELISTED");
-          isWhitelist = true;
-          return;
-        } else {
-          unique = false;
-          sites[index].count++;
-          return;
-        }
+  var isWhitelist = false;
+  //check for existing index and whitelist status
+  sites.forEach((site, index) => {
+    if (hostname == site.name) {
+      if (site.whitelist) {
+        console.log("SITE WHITELISTED");
+        isWhitelist = true;
+        return;
+      } else {
+        unique = false;
+        sites[index].count++;
+        return;
       }
-    });
-
-    //exit function if whitelisted
-    if (isWhitelist) {
-      return;
     }
+  });
 
-    if (unique) {
-      sites.push({
-        name: hostname,
-        count: 1,
-        icon: favicon,
-        whitelist: false,
-      });
-    }
-
-    //sort from largest to smallest
-    sites.sort((a, b) => b.count - a.count);
-
-    //push to storage
-    chrome.storage.local.set({ sites: sites });
-    console.log(sites);
+  //exit function if whitelisted
+  if (isWhitelist) {
+    return;
   }
+
+  if (unique) {
+    sites.push({
+      name: hostname,
+      count: 1,
+      icon: favicon,
+      whitelist: false,
+    });
+  }
+
+  //sort from largest to smallest
+  sites.sort((a, b) => b.count - a.count);
+
+  //push to storage
+  chrome.storage.local.set({ sites: sites });
+  console.log(sites);
 };
 
 var sortProcrastination = () => {
@@ -139,14 +138,11 @@ var setIcon = (procrastination) => {
     mood = "cry";
   }
 
-  //optional badge
-  //chrome.browserAction.setBadgeText({ text: `${Math.floor(procrastination)}` });
-
   var i = 0;
   //assemble gif for mood
   function iconLoop() {
     setTimeout(function timer() {
-      chrome.browserAction.setIcon({
+      chrome.action.setIcon({
         path: "./assets/" + mood + (i % 4) + ".png",
       });
       i++;
@@ -221,7 +217,10 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   var url = tab.url;
   var status = tab.status;
 
-  if (url.search(/newtab|chrome:/) != -1 || status == "loading") {
+  if (
+    url.search(/newtab|chrome:|chrome-extension:/) != -1 ||
+    status == "loading"
+  ) {
     console.log("EXITED");
     return;
   }
@@ -238,7 +237,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 //new user
 chrome.runtime.onInstalled.addListener(function (object) {
   chrome.tabs.create(
-    { url: chrome.extension.getURL("welcome.html") },
+    { url: chrome.runtime.getURL("welcome.html") },
     function (tab) {
       console.log("New tab launched");
     }
