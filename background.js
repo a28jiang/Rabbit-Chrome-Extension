@@ -1,131 +1,10 @@
+import { checkValidURL, getCurrentTab } from "./background/tabs.js";
+import { calculateProductivity } from "./background/procrastination.js";
+
 var sites = [];
 var paused = false;
 
-var getCurrentTab = (hostname, favicon) => {
-  // if (!paused) {
-  var unique = true;
-
-  var isWhitelist = false;
-  //check for existing index and whitelist status
-  sites.forEach((site, index) => {
-    if (hostname == site.name) {
-      if (site.whitelist) {
-        console.log("SITE WHITELISTED");
-        isWhitelist = true;
-        return;
-      } else {
-        unique = false;
-        sites[index].count++;
-        return;
-      }
-    }
-  });
-
-  //exit function if whitelisted
-  if (isWhitelist) {
-    return;
-  }
-
-  if (unique) {
-    sites.push({
-      name: hostname,
-      count: 1,
-      icon: favicon,
-      whitelist: false,
-    });
-  }
-
-  //sort from largest to smallest
-  sites.sort((a, b) => b.count - a.count);
-
-  //push to storage
-  chrome.storage.local.set({ sites: sites });
-  console.log(sites);
-};
-
-var sortProcrastination = () => {
-  chrome.storage.local.get(["sites"], function (result) {
-    var procrastination = 50;
-    const data = result.sites;
-    var isLowData = data.length < 6;
-
-    //handle low data case
-    // if (data.length < 5) {
-    //   chrome.storage.local.set({ state: procrastination });
-    //   setIcon(procrastination);
-    //   return;
-    // }
-
-    //generate procrastination index
-    for (var i = 0; i < (isLowData ? data.length : 6); i++) {
-      // console.log(data[i].name, siteValue(data[i].name));
-      procrastination =
-        procrastination + siteValue(data[i].name) * (1.4 - 0.1 * i);
-    }
-
-    //handling procrastination exceeding
-    if (procrastination < 0) procrastination = 0;
-    if (procrastination > 100) procrastination = 100;
-
-    //trigger icon change
-    setIcon(procrastination);
-    // console.log("P_INDEX", procrastination);
-
-    //set procrastination
-    chrome.storage.local.set({ state: procrastination });
-  });
-};
-
-var siteValue = (site) => {
-  //procrastination sites
-  if (
-    site.search(
-      /netflix|twitch|kissanime|anime|dramacool|youku|soap2day|viki|hulu|dramafever|asiancrush|hbo|disneyplus|primevideo|viewster|crunchryoll/
-    ) != -1
-  )
-    return -26;
-  if (
-    site.search(
-      /facebook|imdb|instagram|tiktok|twitter|fandom|9gag|buzzfeed|forbes|kongregate|y8|depop/
-    ) != -1
-  )
-    return -21;
-  if (
-    site.search(
-      /amazon|reddit|youtube|ebay|pinterest|aliexpress|taobao|wish.|yesstyle/
-    ) != -1
-  )
-    return -14;
-  if (site.search(/kijiji|craigslist|messenger|discord/) != -1) return -5;
-
-  //productive sites
-  if (site.search(/ctv|global|cbc|abc|torontosun|cp24|nationalpost|bbc/) != -1)
-    return 6;
-  if (site.search(/outlook|edu|gmail|google|wikipedia/) != -1) return 9;
-  if (
-    site.search(
-      /docs.|drive.|quora|yahoo|news|keep.|masterclass|coursehero|medium|course|quizlet|kahoot|linkedin/
-    ) != -1
-  )
-    return 13;
-
-  if (
-    site.search(
-      /waterloo|mcmaster|uwo|utoronto|uottawa|ryerson|uoguelph|mcgill|york|queensu|classroom|canvas.net|canva|webex|bongo|teams|zoom|edmodo/
-    ) != -1
-  )
-    return 17;
-  if (
-    site.search(
-      /stackoverflow|chegg|mobius|piazza|behance|w3schools|github|developer|learn|office|coursera|udemy|scholar/
-    ) != -1
-  )
-    return 21;
-
-  return 0;
-};
-
-var setIcon = (procrastination) => {
+const setIcon = (procrastination) => {
   var mood = "chill";
 
   if (procrastination > 70) {
@@ -195,7 +74,8 @@ chrome.runtime.onMessage.addListener(function (request) {
 //background scripts
 initBackground();
 setInterval(freshData, 1000 * 60 * 60);
-setInterval(sortProcrastination, 3000);
+setInterval(() => calculateProductivity(setIcon), 3000);
+
 chrome.tabs.onActivated.addListener(function () {
   chrome.tabs.query(
     {
@@ -203,34 +83,27 @@ chrome.tabs.onActivated.addListener(function () {
       active: true,
     },
     function (tabs) {
-      var url = tabs[0].url;
-      var favicon = tabs[0].favIconUrl;
-
-      hostname = new URL(url).hostname;
-      console.log("onActivated", hostname);
-      getCurrentTab(hostname, favicon);
+      const { url, favicon, status } = tabs[0];
+      if (checkValidURL(tabs[0])) {
+        const hostname = new URL(url).hostname;
+        console.log("onActivated", hostname);
+        getCurrentTab(hostname, favicon, sites);
+      }
     }
   );
 });
 
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-  var url = tab.url;
-  var status = tab.status;
+chrome.tabs.onUpdated.addListener(function (_, __, tab) {
+  const { url, status } = tab;
 
-  if (
-    url.search(/newtab|chrome:|chrome-extension:/) != -1 ||
-    status == "loading"
-  ) {
-    console.log("EXITED");
-    return;
-  }
+  if (checkValidURL(tab)) {
+    if (status == "complete") {
+      const hostname = new URL(url).hostname;
+      var favicon = tab.favIconUrl;
 
-  if (status == "complete") {
-    hostname = new URL(url).hostname;
-    var favicon = tab.favIconUrl;
-
-    console.log("onUpdated", hostname);
-    getCurrentTab(hostname, favicon);
+      console.log("onUpdated", hostname);
+      getCurrentTab(hostname, favicon, sites);
+    }
   }
 });
 
