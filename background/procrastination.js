@@ -1,6 +1,6 @@
 import { configMap, ignoreComponents } from "./baseConfig.js";
 import { setPopupIcon } from "./icon.js";
-import { sum } from "../util.js";
+import { sum } from "../utils/utils.js";
 
 // Uses configMap to calculate a site's given score
 export const siteValue = (site) => {

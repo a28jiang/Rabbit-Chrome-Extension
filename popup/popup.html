@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Procrastination</title>
+</head>
+<link rel="stylesheet" href="popup.css">
+<body>
+  <div class="center" style="width: 350px">
+    <div id="header" style="width: 100%; height: 40px; margin-bottom: 12px">
+      <img id="settings" class="headerRight" src="../assets/settings.png" />
+      <div id="pause">
+        <img class="headerLeft" src="../assets/pause.png" />
+      </div>
+      <h3 style="padding-left: 200px">Rabbit.exe</h3>
+    </div>
+
+    <div id="overlay"></div>
+    <!--Rabbit Gif-->
+    <div class="center" id="gif"></div>
+
+    <!--Rabbit Mood-->
+    <h1 id="message"></h1>
+
+    <table>
+      <tr style="margin-left: -10px">
+        <th>Most Visited Sites</th>
+        <th>Productivity</th>
+      </tr>
+      <tr>
+        <!--Top Sites-->
+        <td style="padding-left: 10px" id="topsites"></td>
+
+        <!--Score-->
+        <td id="score" class="center-row"></td>
+      </tr>
+    </table>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+@font-face {
+    font-family: "Lulo";
+    src: url("../assets/Lulo.ttf");
+}
+
+input {
+    margin-right: 16px;
+    margin-top: -8px;
+}
+
+body {
+    margin: 0px;
+}
+
+a:hover {
+    opacity: 0.5;
+}
+
+.save {
+    margin-top: 24px;
+    font-size: 12px;
+    text-align: center;
+    font-family: "Lulo";
+    margin-bottom: 8px;
+    color: gray;
+    cursor: pointer;
+}
+
+.reset {
+    margin-bottom: 18px;
+    font-size: 8px;
+    text-align: center;
+    font-family: "Lulo";
+    color: lightgray;
+    cursor: pointer;
+}
+
+h2 {
+    font-size: 35px;
+    margin-top: 0px;
+    text-align: center;
+    font-family: "Lulo";
+    color: gray;
+}
+
+h3 {
+    padding-left: 16px;
+    font-size: 16px;
+    color: gray;
+    font-weight: 600;
+}
+
+p {
+    color: lightgray;
+    font-size: 12px;
+}
+
+a {
+    color: gray;
+    font-weight: 600;
+}
+
+table {
+    padding: 16px;
+}
+
+th {
+    color: #c0c0c0;
+    font-size: 14px;
+}
+
+.icon {
+    width: 12px;
+    height: 12px;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
