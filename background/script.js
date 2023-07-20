@@ -8,18 +8,18 @@ import {
 } from "./listeners.js";
 
 let sites = [];
-let paused = false;
+let showRabbit = false;
 
 // initialize
 const initBackground = () => {
-  chrome.storage.local.set({ pauseState: false });
+  chrome.storage.local.set({ showRabbit: false });
 };
 
 //Initialize Script
 initBackground();
 
 // // Listeners
-messageListener(sites, paused);
+messageListener(sites, showRabbit);
 tabActivationListener(sites);
 tabUpdatedListener(sites);
 onInstalledListener();

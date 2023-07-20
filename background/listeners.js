@@ -31,17 +31,17 @@ export const tabUpdatedListener = (sites) => {
   });
 };
 
-export const messageListener = (sites, paused) => {
-  //reset, pause and update sites
+export const messageListener = (sites, showRabbit) => {
+  //reset, showRabbit and update sites
   chrome.runtime.onMessage.addListener(function (request) {
     if (request.type == "resetSites") {
       sites = [];
       chrome.storage.local.set({ sites: sites });
       chrome.storage.local.set({ state: 50 });
     }
-    if (request.type == "pauseSites") {
-      paused = !paused;
-      chrome.storage.local.set({ pauseState: paused });
+    if (request.type == "showRabbit") {
+      showRabbit = !showRabbit;
+      chrome.storage.local.set({ showRabbit: showRabbit });
     }
     if (request.type == "updateSites") {
       chrome.storage.local.get(["sites"], function (result) {

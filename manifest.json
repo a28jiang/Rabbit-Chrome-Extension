@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Rabbit: Productivity-Procrastination Tracker",
   "description": "An interactive companion to keep you focused and productive.",
-  "version": "2.0",
+  "version": "2.0.2",
   "icons": {
     "128": "assets/icon.png"
   },
@@ -11,7 +11,7 @@
     "default_popup": "popup/popup.html",
     "persistent": true
   },
-  "permissions": ["storage", "tabs", "activeTab", "scripting"],
+  "permissions": ["storage", "tabs", "activeTab"],
 
   "background": {
     "service_worker": "background/script.js",
