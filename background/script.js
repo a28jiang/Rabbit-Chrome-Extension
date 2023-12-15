@@ -25,5 +25,5 @@ tabUpdatedListener(sites);
 onInstalledListener();
 
 // Interval Functions
-setInterval(() => refreshSiteData(sites), 1000 * 60 * 10);
+setInterval(() => refreshSiteData(sites), 1000 * 60 * 25);
 setInterval(calculateProductivity, 1000 * 5);
