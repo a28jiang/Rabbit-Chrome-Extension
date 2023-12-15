@@ -1,4 +1,4 @@
-const HIGH_PROCRASTINATION_SET = new Set([
+const HIGH_PROCRASTINATION_SET = [
   "netflix",
   "twitch",
   "kissanime",
@@ -19,10 +19,11 @@ const HIGH_PROCRASTINATION_SET = new Set([
   "viewster",
   "crunchryoll",
   "ticketmaster",
+  "temu",
   "bilibili",
-]);
+];
 
-const MED_PROCRASTINATION_SET = new Set([
+const MED_PROCRASTINATION_SET = [
   "facebook",
   "imdb",
   "instagram",
@@ -44,9 +45,9 @@ const MED_PROCRASTINATION_SET = new Set([
   "ozon",
   "pinduoduuo",
   "wayfair",
-]);
+];
 
-const LOW_PROCRASTINATION_SET = new Set([
+const LOW_PROCRASTINATION_SET = [
   "kijiji",
   "craigslist",
   "messenger",
@@ -63,11 +64,13 @@ const LOW_PROCRASTINATION_SET = new Set([
   "jd",
   "soundcloud",
   "target",
-]);
+  "blind",
+];
 
-const HIGH_PRODUCTIVITY_SET = new Set([
+const HIGH_PRODUCTIVITY_SET = [
   "stackoverflow",
   "instructure",
+  "simplify",
   "scribd",
   "byjus",
   "udemy",
@@ -78,7 +81,9 @@ const HIGH_PRODUCTIVITY_SET = new Set([
   "behance",
   "w3schools",
   "github",
+  "interview",
   "developer",
+  "leetcode",
   "learn",
   "office",
   "coursera",
@@ -109,9 +114,9 @@ const HIGH_PRODUCTIVITY_SET = new Set([
   "brainly",
   "pearson",
   "indeed",
-]);
+];
 
-const MED_PRODUCTIVITY_SET = new Set([
+const MED_PRODUCTIVITY_SET = [
   "openai",
   "duolingo",
   "quizz",
@@ -120,6 +125,9 @@ const MED_PRODUCTIVITY_SET = new Set([
   "edu",
   "gmail",
   "google",
+  "openai",
+  "tech",
+  "trueup",
   "wikipedia",
   "docs",
   "drive",
@@ -138,9 +146,9 @@ const MED_PRODUCTIVITY_SET = new Set([
   "university",
   "course",
   "study",
-]);
+];
 
-const LOW_PRODUCTIVITY_SET = new Set([
+const LOW_PRODUCTIVITY_SET = [
   "ctv",
   "global",
   "cbc",
@@ -155,7 +163,7 @@ const LOW_PRODUCTIVITY_SET = new Set([
   "talent",
   "greenhouse",
   "lever",
-]);
+];
 
 export const configMap = {
   HIGH_PROCRASTINATION: {
@@ -186,10 +194,18 @@ export const configMap = {
 
 export const ignoreComponents = new Set([
   "www",
+  "io",
+  "ru",
   "com",
   "ca",
   "org",
   "net",
   "org",
   "co",
+  "me",
+  "uk",
+  "cn",
+  "au",
+  "xyz",
+  "biz",
 ]);

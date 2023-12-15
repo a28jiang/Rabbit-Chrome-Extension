@@ -8,6 +8,7 @@ let [offsetX, offsetY, imageWidth, initialWidth, isResizing, startX, startY] = [
   0,
   0,
 ];
+let toggleTimer = false;
 
 /* ------------------------ COMPONENTS ------------------------ */
 
@@ -108,11 +109,15 @@ function registerDragListeners() {
 function registerToggleListeners() {
   // Element hover handler
   gifImage.addEventListener("mouseenter", function () {
+    toggleTimer = true;
     toggleElements({ image: true, icons: true });
   });
   gifImage.addEventListener("mouseleave", function () {
+    toggleTimer = false;
     setTimeout(function () {
-      toggleElements({ icons: false });
+      if (!toggleTimer) {
+        toggleElements({ icons: false });
+      }
     }, 5000);
   });
 

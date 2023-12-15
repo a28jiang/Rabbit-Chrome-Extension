@@ -19,11 +19,11 @@ export const tabActivationListener = (sites) => {
 };
 
 export const tabUpdatedListener = (sites) => {
-  chrome.tabs.onUpdated.addListener(function (_, __, tab) {
+  chrome.tabs.onUpdated.addListener((_, changeInfo, tab) => {
     const { url, status } = tab;
 
     if (checkValidURL(tab)) {
-      if (status == "complete") {
+      if (status == "complete" && changeInfo["status"] == "complete") {
         const hostname = new URL(url).hostname;
         updateSites(hostname, tab["favIconUrl"], sites);
       }
@@ -52,12 +52,14 @@ export const messageListener = (sites, showRabbit) => {
 };
 
 export const onInstalledListener = () => {
-  chrome.runtime.onInstalled.addListener(function () {
-    chrome.tabs.create(
-      { url: chrome.runtime.getURL("tutorial/welcome.html") },
-      function () {
-        console.log("New tab launched");
-      }
-    );
+  chrome.runtime.onInstalled.addListener(function (e) {
+    if (e.reason === "install") {
+      chrome.tabs.create(
+        { url: chrome.runtime.getURL("tutorial/welcome.html") },
+        function () {
+          console.log("New tab launched");
+        }
+      );
+    }
   });
 };

@@ -18,12 +18,12 @@ const initBackground = () => {
 //Initialize Script
 initBackground();
 
-// // Listeners
+// Listeners
 messageListener(sites, showRabbit);
 tabActivationListener(sites);
 tabUpdatedListener(sites);
 onInstalledListener();
 
 // Interval Functions
-setInterval(() => refreshSiteData(sites), 1000 * 60 * 60);
-setInterval(calculateProductivity, 3000);
+setInterval(() => refreshSiteData(sites), 1000 * 60 * 10);
+setInterval(calculateProductivity, 1000 * 5);

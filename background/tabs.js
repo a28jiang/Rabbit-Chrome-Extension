@@ -50,10 +50,9 @@ export const updateSites = (hostname = "", favicon, sites) => {
 };
 
 export const refreshSiteData = (sites) => {
-  sites = sites.slice(5);
-  sites.forEach((site, index) => {
-    site.count = 5 - index;
+  sites.splice(5);
+  sites.forEach((site) => {
+    site.count = 0;
   });
-
   chrome.storage.local.set({ sites: sites });
 };

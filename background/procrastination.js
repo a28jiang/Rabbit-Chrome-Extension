@@ -6,20 +6,17 @@ import { sum } from "../utils/utils.js";
 export const siteValue = (site) => {
   let value = 0;
 
-  for (const [score, siteSet] of Object.entries(configMap)) {
+  for (const type of Object.keys(configMap)) {
     const siteComponents = site.split(".");
-    console.log;
     const setMatch = siteComponents.some((component) => {
       if (ignoreComponents.has(component)) {
-        // ignore domain & extension components
         return false;
-      } else {
-        return siteSet["keys"].has(component); // check given siteSet for component match
       }
+      return configMap[type]["keys"].some((item) => item.includes(component)); // check given siteSet for component match
     });
 
     if (setMatch) {
-      value = configMap[score]["value"];
+      value = configMap[type]["value"];
       break;
     }
   }
@@ -30,13 +27,12 @@ export const siteValue = (site) => {
 export const calculateProductivity = () => {
   chrome.storage.local.get(["sites"], function (result) {
     const data = result.sites;
-    const dataLength = data.length < 6 ? data.length : 6;
-
+    const dataLength = Math.min(5, data.length);
     //generate procrastination index
-    const siteValues = Array.from({ length: dataLength }, (_, index) =>
-      siteValue(data[index].name)
+    const siteValues = Array.from(
+      { length: dataLength },
+      (_, index) => siteValue(data[index].name) * (1.4 - 0.2 * index)
     );
-
     const procrastination = Math.max(
       0,
       Math.min(100, Math.floor(50 + sum(siteValues)))
